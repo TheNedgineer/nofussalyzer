@@ -1,3 +1,14 @@
+---
+title: AI Political Talk Bias Analyser
+emoji: 🧭
+colorFrom: green
+colorTo: yellow
+sdk: docker
+sdk_version: "{{sdkVersion}}"
+app_file: app.py
+pinned: true
+---
+
 # 🧭 AI Political Talk Bias Analyser
 
 A lightweight, open-source web tool that attempts to detect perceived political leaning (Left • Center • Right) in any text or news article — using a **zero-shot** BART model (no political fine-tuning required).
