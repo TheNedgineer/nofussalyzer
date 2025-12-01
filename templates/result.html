@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Analysis Complete</h2>
+
+{% if error %}
+  <div style="color:#d00; background:#ffebee; padding:1.5rem; border-radius:1rem; margin:1.5rem 0;">
+    <strong>Error:</strong> {{ error }}
+  </div>
+  <p><a href="/">← Try again</a></p>
+{% else %}
+
+  <div style="background:#f8f9fa; padding:1.5rem; border-radius:1rem; margin:2rem 0;">
+    <strong>Text preview (first 1000 chars):</strong><br>
+    <small>{{ text }}...</small>
+  </div>
+
+  <h3 style="font-size:3rem; margin:1rem 0; color:#007BFF;">
+    {% if scores.predicted_bias == "Left" %}Left-leaning
+    {% elif scores.predicted_bias == "Right" %}Right-leaning
+    {% else %}Centrist / Neutral{% endif %}
+  </h3>
+
+  <p style="font-size:1.4rem;">
+    Confidence: <strong>{{ (scores.confidence * 100)|round(1) }}%</strong>
+  </p>
+
+  <h4>Detailed scores</h4>
+  <ul style="font-size:1.2rem; line-height:2;">
+    <li>Left-wing: {{ (scores.scores.Left * 100)|round(1) }}%</li>
+    <li>Center:    {{ (scores.scores.Center * 100)|round(1) }}%</li>  
+    <li>Right-wing: {{ (scores.scores.Right * 100)|round(1) }}%</li>
+  </ul>
+
+  <p><a href="/">Analyse another text or article</a></p>
+
+  <!-- Same two ethical ads as on index -->
+  <div class="ad-space" style="margin-top:3rem;">
+    <small>Advertisement</small><br>
+    <a href="https://example.com/ethical-service-1" target="_blank" rel="noopener">
+      Need fair AI audits for your newsroom? → Try FairCheck AI
+    </a>
+  </div>
+
+  <div class="ad-space">
+    <small>Advertisement</small><br>
+    <a href="https://example.com/ethical-service-2" target="_blank" rel="noopener">
+      Building an open-source fact-checking tool? Use our open API
+    </a>
+  </div>
+
+{% endif %}
+
+{% endblock %}

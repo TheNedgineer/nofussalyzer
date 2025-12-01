@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 style="margin:1rem 0 1.5rem; text-align:center; font-size:1.6rem;">
+  Paste any text or news URL below
+</h3>
+
+<form action="/analyse" method="post">
+    <textarea 
+        name="input" 
+        rows="7" 
+        required
+        placeholder="e.g. Tax the rich to fund healthcare&#10;or https://politico.com/..."
+        style="font-size:1.05rem; padding:14px; border-radius:12px; border:2px solid #ddd;"
+        autofocus
+    ></textarea>
+
+    <button type="submit" style="
+        width:100%; margin-top:1rem; padding:16px; font-size:1.25rem; 
+        font-weight:600; background:#007BFF; color:white; border:none; 
+        border-radius:12px; cursor:pointer;">
+        Analyse Political Bias
+    </button>
+</form>
+
+<div class="ad-space" style="margin-top:1.8rem; font-size:0.92rem;">
+    <small>Ad</small><br>
+    <a href="https://example.com/ethical-service-1" target="_blank" rel="noopener">
+      Fair AI audits for newsrooms → FairCheck
+    </a>
+</div>
+
+<div class="ad-space" style="margin-top:1rem; font-size:0.92rem;">
+    <small>Ad</small><br>
+    <a href="https://example.com/ethical-service-2" target="_blank" rel="noopener">
+      Open-source fact-checking API available
+    </a>
+</div>
+
+{% endblock %}

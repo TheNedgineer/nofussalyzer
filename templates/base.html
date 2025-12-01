@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Political Bias Detector</title>
+    <style>
+        body {font-family:system-ui,sans-serif; background:#f8f9fa; margin:0; padding:2rem 1rem; color:#333; min-height:100vh; display:flex; flex-direction:column;}
+        header {text-align:center; margin-bottom:1rem;}
+        h1 {margin:0; font-size:1.9rem; color:#111;}
+        .container {max-width:680px; margin:auto auto 2rem; background:white; padding:2rem 1.8rem; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.1); flex:1;}
+        textarea {width:100%; box-sizing:border-box; resize:none;}
+        button:hover {background:#0056b3 !important;}
+
+        /* Spinner */
+        #loading {display:none; position:fixed; inset:0; background:rgba(255,255,255,0.97); backdrop-filter:blur(6px); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-size:1.3rem; color:#007BFF;}
+        .spinner {width:70px; height:70px; border:7px solid #f0f0f0; border-top:7px solid #007BFF; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:1rem;}
+        @keyframes spin {to{transform:rotate(360deg)}}
+
+        .ad-space {padding:12px; background:#f0f8ff; border-left:4px solid #007BFF; border-radius:0 10px 10px 0;}
+        .kofi {text-align:center; margin:1.5rem 0;}
+        .kofi img {height:38px;}
+        footer {text-align:center; color:#777; font-size:0.85rem; margin-top:auto; padding-top:1rem;}
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <div class="spinner"></div>
+    <div>Analysing bias…</div>
+</div>
+
+<header>
+    <h1>AI Political Bias Analyser</h1>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<div class="kofi">
+    <a href="https://ko-fi.com/thenedgineer" target="_blank">
+        <img src="https://storage.ko-fi.com/cdn/kofi_stroke_cup.svg" alt="Support on Ko-fi">
+    </a>
+</div>
+
+
+<footer style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.9rem; color: #555; text-align: center;">
+
+    Open source • Apache 2.0
+
+  <h3>Disclaimer</h3>
+  <p>
+    The AI Political Bias Analyzer is an experimental, research-oriented tool that attempts to estimate the perceived political leaning (Left, Center, or Right) of a given text or news article.
+  </p>
+  <p>
+    It uses a zero-shot machine-learning model (facebook/bart-large-mnli) with custom prompts. Results are <strong>not definitive, objective, or scientifically validated measures of bias</strong>. Political leaning is inherently subjective, context-dependent, and varies across cultures, time periods, and individuals.
+  </p>
+  <p>
+    Key limitations:
+  </p>
+  <ul style="display: inline-block; text-align: left; margin: 1rem 0;">
+    <li>The model can be influenced by wording, tone, topic selection, and framing, even when the underlying facts are neutral.</li>
+    <li>It may misclassify satire, quotes, historical texts, or nuanced positions.</li>
+    <li>Confidence scores reflect the model’s internal certainty, not real-world accuracy.</li>
+    <li>The tool does not evaluate factual accuracy, only perceived ideological direction.</li>
+    <li>Short texts or texts with little explicit political content often produce unreliable or near-random results.</li>
+  </ul>
+  <p>
+    This tool is provided for <strong>educational, entertainment, and research purposes only</strong>. It should not be used as evidence in arguments, journalism, legal proceedings, or to label any person, organization, or publication as definitively “biased.”
+  </p>
+  <p>
+    We do not endorse or oppose any political ideology, party, or candidate. The developers of this tool may hold personal political views that differ from the model’s outputs.
+  </p>
+  <p>
+    Results can and will change as we experiment with prompts, models, and averaging techniques. Use critically and have fun exploring!
+  </p>
+  <p>
+    Made with ☕ and curiosity • <a href="https://github.com/yourusername/your-repo">View source on GitHub</a>
+  </p>
+</footer>
+
+<script>
+    document.querySelector('form').onsubmit = () => {
+        document.getElementById('loading').style.display = 'flex';
+    };
+</script>
+</body>
+</html>
