@@ -88,6 +88,3 @@ async def analyse(request: Request, input: str = Form(...)):
                 "error": str(e),
             },
         )
-
-
-# git to hf test
