@@ -1,13 +1,21 @@
+# .github/workflows/sync-to-hf.yml
 name: Sync to Hugging Face Space
+
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+
 jobs:
-  sync-to-hf:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Push to HF Space
+        with:
+          fetch-depth: 0
+
+      - name: Push to Hugging Face Space (force-with-lease)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://thenedgineer:$HF_TOKEN@huggingface.co/spaces/thenedgineer/nofussalyzer main
+        run: |
+          git remote add hf https://thenedgineer:$HF_TOKEN@huggingface.co/spaces/thenedgineer/nofussalyzer || true
+          git push hf main --force-with-lease
