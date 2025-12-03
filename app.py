@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from zs_bias_model import analyse_bias
 from scraper import extract_article_text
-import re
+import traceback
 
 # from urllib.parse import urlparse
 # import asyncio
@@ -32,59 +32,56 @@ async def home(request: Request):
 @app.post("/analyse", response_class=HTMLResponse)
 async def analyse(request: Request, input: str = Form(...)):
     try:
-        raw = input.strip()
-        if not raw:
-            raise ValueError("Please enter some text or a URL")
+        raw_input = input.strip()
+        if not raw_input:
+            raise ValueError("No input provided.")
 
         # Smart URL detection
-        url_regex = re.compile(
-            r"^https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+"
-            r"(?:/[\w.~:/?#[\]@!$&'()*+,;=%-]*)?$"
-        )
-        is_url = raw.lower().startswith(("http://", "https://")) or bool(
-            url_regex.match(raw)
-        )
-
-        if is_url:
-            # Clean up common copy-paste junk
-            clean_url = raw.split()[0].strip("<>")
-            print(f"Fetching article from URL: {clean_url}")
-            article_text = extract_article_text(clean_url)
-
-            if not article_text or len(article_text) < 120:
-                raise ValueError(
-                    "Couldn't extract readable text from that page. "
-                    "Try pasting the article text directly instead."
-                )
-            text_to_analyse = article_text
-            source_note = f"(extracted from {clean_url})"
+        if raw_input.lower().startswith(("http://", "https://")):
+            print(f"Fetching URL: {raw_input}")
+            text = extract_article_text(raw_input)
+            if not text or "Error" in text or len(text) < 50:
+                raise ValueError("Could not extract meaningful text from the URL.")
         else:
-            if len(raw) < 30:
-                raise ValueError(
-                    "Please enter a longer piece of text (at least a sentence or two)"
-                )
-            text_to_analyse = raw
-            source_note = ""
+            text = raw_input
+            if len(text) < 15:
+                raise ValueError("Please enter at least a short sentence.")
 
-        # Run the bias analysis
-        result = analyse_bias(text_to_analyse)
+        print(f"Analysing text (first 200 chars): {text[:200]}...")
+        scores = analyse_bias(text)  # ← this line creates the 'scores' variable
+
+        # ——— SHARE ON X: now safe because scores is guaranteed to exist here ———
+        result_url = str(request.url)
+
+        share_text = (
+            f"AI just rated this as {scores['predicted_bias']} "
+            f"({scores['confidence']:.0%} confidence) on the Political Bias Analyzer\n\n"
+            f"\"{text.strip()[:140].rstrip('.')}\"...\""
+        )
+        share_text = share_text[:260]  # stay under X's limits
 
         return templates.TemplateResponse(
             "result.html",
             {
                 "request": request,
-                "scores": result,
-                "text": text_to_analyse[:1200]
-                + ("..." if len(text_to_analyse) > 1200 else ""),
-                "source_note": source_note,
+                "scores": scores,
+                "text": text[:1000],
+                "share_text": share_text,
+                "share_url": result_url,
             },
         )
 
     except Exception as e:
+        error_msg = f"Oops! Something went wrong: {str(e)}"
+        print(f"ERROR DETAILS: {error_msg}\n{traceback.format_exc()}")
+
         return templates.TemplateResponse(
             "result.html",
             {
                 "request": request,
-                "error": str(e),
+                "error": error_msg + " (Check console for details)",
+                # Provide defaults so result.html never crashes
+                "share_text": "",
+                "share_url": "",
             },
         )

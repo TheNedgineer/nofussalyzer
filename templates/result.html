@@ -32,6 +32,15 @@
     <li>Right-wing: {{ (scores.scores.Right * 100)|round(1) }}%</li>
   </ul>
 
+  <!-- The share-on-x button -->
+  <div style="text-align:center; margin:2rem 0;">
+      <a href="https://x.com/intent/post?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}"
+         target="_blank"
+         style="background:#000; color:white; padding:12px 24px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-block;">
+         Share on X
+      </a>
+  </div>
+
   <p><a href="/">Analyse another text or article</a></p>
 
   <!-- Same two ethical ads as on index -->
