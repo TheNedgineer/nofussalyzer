@@ -32,14 +32,33 @@
     <li>Right-wing: {{ (scores.scores.Right * 100)|round(1) }}%</li>
   </ul>
 
-  <!-- The share-on-x button -->
-  <div style="text-align:center; margin:2rem 0;">
-      <a href="https://x.com/intent/post?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}"
-         target="_blank"
-         style="background:#000; color:white; padding:12px 24px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-block;">
-         Share on X
-      </a>
+  <!-- Share buttons row -->
+<div style="text-align:center; margin:2rem 0;">
+  <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+    
+    <!-- Share on X -->
+    <a href="https://x.com/intent/post?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}"
+       target="_blank" rel="noopener"
+       style="background:#000; color:white; padding:12px 24px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-flex; align-items:center; gap:8px;">
+      <span style="font-size:1.3em;">𝕏</span> Share on X
+    </a>
+
+    <!-- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}"
+       target="_blank" rel="noopener"
+       style="background:#1877F2; color:white; padding:12px 24px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-flex; align-items:center; gap:8px;">
+      <span style="font-size:1.2em;">f</span> Share on Facebook
+    </a>
+
+    <!-- Share on Reddit -->
+    <a href="https://reddit.com/submit?url={{ share_url|urlencode }}&title={{ share_text|urlencode }}"
+       target="_blank" rel="noopener"
+       style="background:#FF4500; color:white; padding:12px 24px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-flex; align-items:center; gap:8px;">
+      <span style="font-size:1.3em; font-weight:bold;">R</span> Share on Reddit
+    </a>
+
   </div>
+</div>
 
   <p><a href="/">Analyse another text or article</a></p>
 
