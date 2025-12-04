@@ -18,4 +18,4 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git remote add hf https://thenedgineer:$HF_TOKEN@huggingface.co/spaces/thenedgineer/nofussalyzer || true
-          git push hf main --force-with-lease
+          git push hf main --force-with-lease --force
