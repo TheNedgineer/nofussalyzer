@@ -13,3 +13,6 @@ env/
 .DS_Store
 Thumbs.db
 *.log
+
+# HF token
+HF write token
