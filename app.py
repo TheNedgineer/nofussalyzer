@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from zs_bias_model import analyse_bias
 from scraper import extract_article_text
 import traceback
+from mangum import Mangum
 
 # from urllib.parse import urlparse
 # import asyncio
@@ -85,3 +86,7 @@ async def analyse(request: Request, input: str = Form(...)):
                 "share_url": "",
             },
         )
+
+
+# Wrap for AWS Lambda
+handler = Mangum(app)

@@ -15,6 +15,7 @@ Thumbs.db
 *.log
 pyrightconfig.json
 archive/
+test_model.py
 
 # HF token
 HF write token
