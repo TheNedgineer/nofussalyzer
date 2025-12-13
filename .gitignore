@@ -13,6 +13,8 @@ env/
 .DS_Store
 Thumbs.db
 *.log
+pyrightconfig.json
+archive/
 
 # HF token
 HF write token
